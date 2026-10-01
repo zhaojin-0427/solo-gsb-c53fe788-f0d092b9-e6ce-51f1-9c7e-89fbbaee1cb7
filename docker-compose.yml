@@ -1,0 +1,12 @@
+services:
+  beacon-bench:
+    build: .
+    container_name: beacon-bench
+    ports:
+      - "8000:8000"
+    volumes:
+      - beacon-data:/srv/backend/data
+    restart: unless-stopped
+
+volumes:
+  beacon-data:

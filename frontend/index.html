@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>航标灯质可辨性预检台</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <h1>航标灯质可辨性预检台</h1>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="editor">编辑分析</button>
+      <button class="tab" data-tab="history">历史记录</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ========== 编辑分析 ========== -->
+    <section id="tab-editor" class="tab-panel active">
+      <div class="layout">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>灯串与参数（草稿，可自由编辑）</h2>
+            <span id="save-state" class="save-state"></span>
+          </div>
+
+          <div class="lights-table-wrap">
+            <table class="lights-table">
+              <thead>
+                <tr>
+                  <th class="col-idx">#</th>
+                  <th class="col-name">名称</th>
+                  <th class="col-code">循环亮灭串（1=亮，0=灭，每位 0.1 秒，长度 2～80）</th>
+                  <th class="col-preview">波形预览（一个周期）</th>
+                  <th class="col-op"></th>
+                </tr>
+              </thead>
+              <tbody id="lights-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="row-actions">
+            <button id="add-light" class="btn">＋ 添加一盏灯</button>
+            <span id="lights-count" class="muted"></span>
+          </div>
+
+          <div class="params">
+            <label class="param">
+              <span>观测窗口上限 W（1～400 位）</span>
+              <input type="number" id="param-W" min="1" max="400" step="1" />
+            </label>
+            <label class="param">
+              <span>每段最多误判 k（0～3 位）</span>
+              <input type="number" id="param-k" min="0" max="3" step="1" />
+            </label>
+          </div>
+
+          <div class="errors" id="errors"></div>
+
+          <div class="analyze-actions">
+            <button id="analyze-btn" class="btn primary">保存并穷举分析</button>
+            <span class="muted">分析将完整枚举每对灯的全部独立起始相位（不抽样），结果保存后不可更改。</span>
+          </div>
+        </div>
+
+        <div class="panel" id="result-panel">
+          <div class="panel-head"><h2>分析结果</h2></div>
+          <div id="result" class="result">
+            <p class="placeholder">配置好灯串后点击「保存并穷举分析」，最短可辨窗口与逐位见证将显示在这里。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 历史记录 ========== -->
+    <section id="tab-history" class="tab-panel">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>历史分析记录（不可变快照）</h2>
+          <span class="muted">记录保存时即固定灯串与参数，后续编辑不影响既有结果。</span>
+        </div>
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>保存时间（UTC）</th>
+              <th>灯数</th>
+              <th>W</th>
+              <th>k</th>
+              <th>结论</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
